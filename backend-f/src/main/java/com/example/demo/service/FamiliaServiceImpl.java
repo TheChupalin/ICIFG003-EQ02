@@ -7,14 +7,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.entity.FamiliaEntity;
+import com.example.demo.entity.PersonaEntity;
 import com.example.demo.interfaces.IFamiliaService;
 import com.example.demo.repository.FamiliaRepository;
+import com.example.demo.repository.PersonaRepository;
 
 @Service
 public class FamiliaServiceImpl implements IFamiliaService{
 
 	@Autowired
 	private FamiliaRepository repositoryFamilia;
+
+	@Autowired
+	private PersonaRepository repositoryPersona;
 
 	@Override
 	public List<FamiliaEntity> findAll() {
@@ -36,6 +41,11 @@ public class FamiliaServiceImpl implements IFamiliaService{
 	@Override
 	public void deleteById(long id) {
 		repositoryFamilia.deleteById(id);
+	}
+
+	@Override
+	public List<PersonaEntity> findPersonasByFamiliaId(int familiaId) {
+		return repositoryPersona.findByFamilia(familiaId);
 	}
 
 }
