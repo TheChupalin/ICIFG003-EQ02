@@ -1,0 +1,24 @@
+.login-container {
+  background: linear-gradient(135deg, #0f172d 0%, #12213f 45%, #1f2b52 100%);
+}
+
+.login-panel {
+  max-width: 900px;
+}
+
+.login-visual {
+  background: linear-gradient(180deg, #1f3b7d, #0c2345);
+}
+
+.login-visual h2 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+
+.login-visual p {
+  opacity: 0.9;
+}
+
+.login-form {
+  max-width: 100%;
+}

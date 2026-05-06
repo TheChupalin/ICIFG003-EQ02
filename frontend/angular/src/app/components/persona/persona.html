@@ -1,0 +1,26 @@
+<h2>CRUD Personas</h2>
+
+<form (ngSubmit)='guardar()'>
+    <input type="text" [(ngModel)]="persona.nombres" name="nombres" placeholder="Nombres" required>
+    <input type="text" [(ngModel)]="persona.apellidopa" name="apellidopa" placeholder="Apellido paterno" required>
+    <input type="text" [(ngModel)]="persona.apellidoma" name="apellidoma" placeholder="Apellido materno" required>
+    <input type="text" [(ngModel)]="persona.tipo" name="tipo" placeholder="Padre o alumno" required>
+    <input type="number" [(ngModel)]="persona.padre" name="padre" placeholder="Padre (ID)" required>
+    <input type="number" [(ngModel)]="persona.madre" name="madre" placeholder="Madre (ID)" required>
+    <input type="text" [(ngModel)]="persona.direccionPrincipal" name="direccionPrincipal" placeholder="Direccion principal" required>
+    <input type="text" [(ngModel)]="persona.comunaRegion" name="comunaRegion" placeholder="Comuna/region" required>
+    <input type="text" [(ngModel)]="persona.telefonoMovil" name="telefonoMovil" placeholder="Telefono movil" required>
+    <input type="date" [(ngModel)]="persona.fechaRegistro" name="fechaRegistro" required>
+    <button type="submit">Guardar</button>
+</form>
+
+<hr>
+
+<ul>
+    <li *ngFor="let p of personas">
+        {{p.id}} - {{p.nombres}} {{p.apellidopa}} {{p.apellidoma}} | {{p.tipo}} | Padre: {{p.padre}} | Madre: {{p.madre}} | {{p.direccionPrincipal}} | {{p.comunaRegion}} | {{p.telefonoMovil}} | {{p.fechaRegistro}}
+
+        <button (click)="editar(p)">Editar</button>
+        <button (click)="eliminar(p.id)">Eliminar</button>
+    </li>
+</ul>

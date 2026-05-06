@@ -1,0 +1,29 @@
+.app-nav {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	gap: 1rem;
+	padding: 0.75rem 1rem;
+	background: #1f2937;
+}
+
+.nav-left {
+	display: flex;
+	gap: 1rem;
+}
+
+.nav-right {
+	display: flex;
+	gap: 1rem;
+	align-items: center;
+}
+
+.app-nav a {
+	color: #f9fafb;
+	text-decoration: none;
+	font-weight: 600;
+}
+
+.app-nav a:hover {
+	text-decoration: underline;
+}

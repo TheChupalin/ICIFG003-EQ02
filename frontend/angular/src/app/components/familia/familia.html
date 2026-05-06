@@ -1,0 +1,21 @@
+<h2>CRUD Familias</h2>
+
+<form (ngSubmit)='guardar()'>
+  <input type="text" [(ngModel)]="familia.nombref" name="nombref" placeholder="Nombre familia" required>
+  <input type="text" [(ngModel)]="familia.representante" name="representante" placeholder="Representante" required>
+  <input type="text" [(ngModel)]="familia.estadocivilpadres" name="estadocivilpadres" placeholder="Estado civil padres" required>
+  <input type="text" [(ngModel)]="familia.situacionvivienda" name="situacionvivienda" placeholder="Situacion vivienda" required>
+  <input type="number" [(ngModel)]="familia.telefono_fijo" name="telefono_fijo" placeholder="Telefono fijo" required>
+  <input type="number" [(ngModel)]="familia.contacto_emergencia" name="contacto_emergencia" placeholder="Contacto emergencia" required>
+  <button type="submit">Guardar</button>
+</form>
+
+<hr>
+
+<ul>
+  <li *ngFor="let f of familias">
+    {{f.id}} - {{f.nombref}} | {{f.representante}} | {{f.estadocivilpadres}} | {{f.situacionvivienda}} | {{f.telefono_fijo}} | {{f.contacto_emergencia}}
+    <button (click)="editar(f)">Editar</button>
+    <button (click)="eliminar(f.id)">Eliminar</button>
+  </li>
+</ul>

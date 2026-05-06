@@ -1,0 +1,16 @@
+@if (store.success()) {
+  <div class="alert alert-success text-center">
+    {{ store.success() }}
+  </div>
+}
+
+<div class="container">
+  <div class="row">
+    <div class="col-lg-5 mb-3">
+      <app-persona-form></app-persona-form>
+    </div>
+    <div class="col-lg-7">
+      <app-persona-list></app-persona-list>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,13 @@
+<nav class="app-nav">
+  <div class="nav-left">
+    <a routerLink="/">Inicio</a>
+    <a routerLink="/login">Login</a>
+    <a routerLink="/personas">Personas</a>
+    <a routerLink="/familias">Familias</a>
+  </div>
+  <div class="nav-right" *ngIf="authService.isAuthenticated$()">
+    <button class="btn btn-sm btn-outline-light" (click)="onLogout()">Salir</button>
+  </div>
+</nav>
+
+<router-outlet />

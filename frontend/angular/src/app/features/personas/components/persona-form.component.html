@@ -1,0 +1,82 @@
+<div class="card shadow-sm">
+  <div class="card-body">
+    <h4 class="card-title mb-3">
+      @if (store.selected()) {
+        Editar Persona
+      } @else {
+        Nueva Persona
+      }
+    </h4>
+
+    <form [formGroup]="form" (ngSubmit)="guardar()">
+      <div class="mb-3">
+        <label class="form-label">Nombres</label>
+        <input class="form-control" formControlName="nombres" placeholder="Ingrese nombres" />
+        @if (form.get('nombres')?.touched && form.get('nombres')?.invalid) {
+          <div class="text-danger mt-1">Los nombres son obligatorios</div>
+        }
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">Apellido paterno</label>
+        <input class="form-control" formControlName="apellidopa" placeholder="Ingrese apellido paterno" />
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">Apellido materno</label>
+        <input class="form-control" formControlName="apellidoma" placeholder="Ingrese apellido materno" />
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">Tipo</label>
+        <input class="form-control" formControlName="tipo" placeholder="Padre o alumno" />
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">Padre (ID)</label>
+        <input class="form-control" type="number" formControlName="padre" placeholder="ID padre" />
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">Madre (ID)</label>
+        <input class="form-control" type="number" formControlName="madre" placeholder="ID madre" />
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">Direccion principal</label>
+        <input class="form-control" formControlName="direccionPrincipal" placeholder="Direccion principal" />
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">Comuna/region</label>
+        <input class="form-control" formControlName="comunaRegion" placeholder="Comuna/region" />
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">Telefono movil</label>
+        <input class="form-control" formControlName="telefonoMovil" placeholder="Telefono movil" />
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">Fecha registro</label>
+        <input class="form-control" type="date" formControlName="fechaRegistro" />
+      </div>
+
+      <div class="d-flex gap-2">
+        <button class="btn btn-primary" type="submit" [disabled]="form.invalid">
+          @if (store.selected()) {
+            Actualizar
+          } @else {
+            Guardar
+          }
+        </button>
+
+        @if (store.selected()) {
+          <button type="button" class="btn btn-secondary" (click)="cancelar()">
+            Cancelar
+          </button>
+        }
+      </div>
+    </form>
+  </div>
+</div>

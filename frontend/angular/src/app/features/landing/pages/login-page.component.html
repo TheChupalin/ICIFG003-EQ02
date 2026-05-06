@@ -1,0 +1,25 @@
+<div class="login-container d-flex align-items-center justify-content-center min-vh-100">
+  <div class="login-panel row g-0 shadow-lg rounded-4 overflow-hidden">
+    <div class="col-lg-6 login-visual d-none d-lg-flex flex-column justify-content-center p-4 text-white">
+      <div>
+        <h2>Bienvenido</h2>
+        <p>Ingresa para administrar personas y familias con rapidez y seguridad.</p>
+      </div>
+    </div>
+    <div class="col-lg-6 p-5 bg-white">
+      <h3 class="mb-4">Iniciar Sesión</h3>
+      <form (ngSubmit)="onSubmit()" class="login-form">
+        <div class="mb-3">
+          <label for="email" class="form-label">Email</label>
+          <input id="email" type="email" class="form-control" [(ngModel)]="email" name="email" required>
+        </div>
+        <div class="mb-4">
+          <label for="password" class="form-label">Contraseña</label>
+          <input id="password" type="password" class="form-control" [(ngModel)]="password" name="password" required>
+        </div>
+        <button type="submit" class="btn btn-primary w-100">Ingresar</button>
+      </form>
+      <p class="text-center text-muted mt-4">¿No tienes cuenta? No es necesario para esta demo.</p>
+    </div>
+  </div>
+</div>

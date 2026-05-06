@@ -1,0 +1,70 @@
+<div class="card shadow-sm">
+  <div class="card-body">
+    <h4 class="card-title mb-3">Lista de Personas</h4>
+
+    @if (store.loading()) {
+      <div class="text-center">
+        <div class="spinner-border text-primary"></div>
+      </div>
+    }
+
+    @if (!store.loading() && store.personas().length === 0) {
+      <div class="alert alert-info">No hay personas registradas</div>
+    }
+
+    @if (mostrarConfirm) {
+      <app-confirm-dialog
+        titulo="Eliminar Persona"
+        mensaje="Estas seguro de eliminar esta persona?"
+        (onConfirm)="confirmarEliminacion()"
+        (onCancel)="cerrarConfirm()"
+      />
+    }
+
+    @if (store.personas().length > 0) {
+      <div class="table-responsive">
+        <table class="table table-striped table-hover">
+          <thead class="table-dark">
+            <tr>
+              <th>Nombres</th>
+              <th>Apellido paterno</th>
+              <th>Apellido materno</th>
+              <th>Tipo</th>
+              <th>Padre</th>
+              <th>Madre</th>
+              <th>Direccion</th>
+              <th>Comuna/region</th>
+              <th>Telefono</th>
+              <th>Fecha</th>
+              <th style="width: 160px;">Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (p of store.personas(); track p.id) {
+              <tr>
+                <td>{{ p.nombres }}</td>
+                <td>{{ p.apellidopa }}</td>
+                <td>{{ p.apellidoma }}</td>
+                <td>{{ p.tipo }}</td>
+                <td>{{ p.padre }}</td>
+                <td>{{ p.madre }}</td>
+                <td>{{ p.direccionPrincipal }}</td>
+                <td>{{ p.comunaRegion }}</td>
+                <td>{{ p.telefonoMovil }}</td>
+                <td>{{ p.fechaRegistro }}</td>
+                <td>
+                  <button class="btn btn-warning btn-sm me-2" (click)="editar(p)">
+                    Editar
+                  </button>
+                  <button class="btn btn-danger btn-sm" (click)="abrirConfirm(p.id)">
+                    Eliminar
+                  </button>
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    }
+  </div>
+</div>
