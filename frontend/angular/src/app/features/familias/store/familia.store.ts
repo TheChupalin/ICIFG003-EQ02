@@ -89,7 +89,7 @@ export class FamiliaStore {
     if (!familia.id) return;
     this.loading.set(true);
     this.error.set(null);
-    this.familiaService.update(familia.id, familia).subscribe({
+    this.familiaService.update(familia).subscribe({
       next: () => {
         this.success.set('Familia actualizada exitosamente');
         this.load();

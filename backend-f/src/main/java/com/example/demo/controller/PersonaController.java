@@ -16,8 +16,8 @@ import com.example.demo.entity.PersonaEntity;
 import com.example.demo.interfaces.IPersonaService;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:8882")
 @RequestMapping("/api/v1/entities/personas")
+@CrossOrigin(origins = "http://localhost:9992")
 public class PersonaController {
 
 	@Autowired
@@ -65,7 +65,7 @@ public class PersonaController {
             existingPersona.setMadre(persona.getMadre());
             existingPersona.setDireccionPrincipal(persona.getDireccionPrincipal());
             existingPersona.setComunaRegion(persona.getComunaRegion());
-            existingPersona.setTelefono_movil(persona.getTelefono_movil());
+            existingPersona.setTelefonoMovil(persona.getTelefonoMovil());
             existingPersona.setFamilia(persona.getFamilia());
             return ResponseEntity.ok(service.save(existingPersona));
         } catch (Exception e) {

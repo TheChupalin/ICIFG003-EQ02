@@ -19,8 +19,8 @@ export class FamiliaComponent implements OnInit {
     id: 0,
     nombref: '',
     representante: '',
-    estadocivilpadres: '',
-    situacionvivienda: '',
+    estadoCivilPadres: '',
+    situacionVivienda: '',
     telefono_fijo: 0,
     contacto_emergencia: 0
   };
@@ -67,8 +67,8 @@ export class FamiliaComponent implements OnInit {
       id: 0,
       nombref: '',
       representante: '',
-      estadocivilpadres: '',
-      situacionvivienda: '',
+      estadoCivilPadres: '',
+      situacionVivienda: '',
       telefono_fijo: 0,
       contacto_emergencia: 0
     };

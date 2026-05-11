@@ -1,37 +1,31 @@
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
-import { delay } from 'rxjs/operators';
-import { Familia } from '../models/familia.model';
-import { MOCK_FAMILIAS } from '../../../shared/data/mock-familias';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { Familia } from '../models/familia.model'; // Asegúrate de que la ruta sea correcta
 
 @Injectable({
   providedIn: 'root'
 })
 export class FamiliaService {
-  private familias = [...MOCK_FAMILIAS];
-  private nextId = Math.max(...this.familias.map(f => f.id)) + 1;
+  // Ajusta esta URL a la ruta de Personas en tu Spring Boot
+  private apiUrl = 'http://localhost:8882/api/v1/entities/personas'; 
+
+  constructor(private http: HttpClient) {}
 
   getAll(): Observable<Familia[]> {
-    // Simula delay de red de 300ms
-    return of([...this.familias]).pipe(delay(300));
+    return this.http.get<Familia[]>(this.apiUrl);
   }
 
   create(familia: Familia): Observable<Familia> {
-    familia.id = this.nextId++;
-    this.familias.push(familia);
-    return of(familia).pipe(delay(300));
+    return this.http.post<Familia>(this.apiUrl, familia);
   }
 
-  update(id: number, familia: Familia): Observable<Familia> {
-    const index = this.familias.findIndex(f => f.id === id);
-    if (index !== -1) {
-      this.familias[index] = familia;
-    }
-    return of(familia).pipe(delay(300));
+  update(familia: Familia): Observable<Familia> {
+    // Normalmente en Spring Boot se manda el ID en la URL para actualizar
+    return this.http.put<Familia>(`${this.apiUrl}/${familia.id}`, familia);
   }
 
   delete(id: number): Observable<void> {
-    this.familias = this.familias.filter(f => f.id !== id);
-    return of(void 0).pipe(delay(300));
+    return this.http.delete<void>(`${this.apiUrl}/${id}`);
   }
 }
