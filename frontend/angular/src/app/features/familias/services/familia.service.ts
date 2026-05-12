@@ -8,7 +8,7 @@ import { Familia } from '../models/familia.model'; // Asegúrate de que la ruta 
 })
 export class FamiliaService {
   // Ajusta esta URL a la ruta de Personas en tu Spring Boot
-  private apiUrl = 'http://localhost:8882/api/v1/entities/personas'; 
+  private apiUrl = 'http://localhost:8882/api/v1/entities/familias'; 
 
   constructor(private http: HttpClient) {}
 

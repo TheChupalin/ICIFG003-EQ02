@@ -1,11 +1,12 @@
 import { Component, inject, effect } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
 import { PersonaStore } from '../services/persona.store';
 
 @Component({
   selector: 'app-persona-form',
   standalone: true,
-  imports: [ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './persona-form.component.html'
 })
 export class PersonaFormComponent {
@@ -14,6 +15,10 @@ export class PersonaFormComponent {
 
   get store() {
     return this._store;
+  }
+
+  private obtenerFechaActual() {
+    return new Date().toISOString().slice(0, 10);
   }
 
   form = this.fb.group({
@@ -27,8 +32,12 @@ export class PersonaFormComponent {
     direccionPrincipal: ['', Validators.required],
     comunaRegion: ['', Validators.required],
     telefonoMovil: ['', Validators.required],
-    fechaRegistro: ['', Validators.required]
+    fechaRegistro: [this.obtenerFechaActual(), Validators.required]
   });
+
+  get padres() {
+    return this.store.personas().filter(p => p.tipo === 'Padre/Madre');
+  }
 
   constructor() {
     effect(() => {

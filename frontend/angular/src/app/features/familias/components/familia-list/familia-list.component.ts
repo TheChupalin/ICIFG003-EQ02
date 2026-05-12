@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FamiliaStore } from '../../store/familia.store';
 import { signal } from '@angular/core';
 import { ConfirmDialogComponent } from '../../../../shared/components/confirm-dialog.component';
+import { PersonaStore } from '../../../personas/services/persona.store';
 
 @Component({
   selector: 'app-familia-list',
@@ -35,9 +36,9 @@ import { ConfirmDialogComponent } from '../../../../shared/components/confirm-di
             <tr *ngFor="let familia of store.familias$()">
               <td>{{ familia.id }}</td>
               <td>{{ familia.nombref }}</td>
-              <td>{{ familia.representante }}</td>
-              <td>{{ familia.estadocivilpadres }}</td>
-              <td>{{ familia.situacionvivienda }}</td>
+              <td>{{ obtenerNombreRepresentante(familia.representante) }}</td>
+              <td>{{ familia.estadoCivilPadres }}</td>
+              <td>{{ familia.situacionVivienda }}</td>
               <td>{{ familia.telefono_fijo }}</td>
               <td>{{ familia.contacto_emergencia }}</td>
               <td>
@@ -65,11 +66,20 @@ import { ConfirmDialogComponent } from '../../../../shared/components/confirm-di
 })
 export class FamiliaListComponent implements OnInit {
   store = inject(FamiliaStore);
+  personaStore = inject(PersonaStore);
   mostrarConfirm = signal(false);
   familiaIdToDelete: number = 0;
 
+  obtenerNombreRepresentante(id: number | string | null | undefined) {
+    if (id == null || id === '') return '-';
+    const personaId = Number(id);
+    const persona = this.personaStore.personas().find(p => p.id === personaId);
+    return persona ? `${persona.nombres} ${persona.apellidopa} ${persona.apellidoma}` : String(id);
+  }
+
   ngOnInit(): void {
     this.store.load();
+    this.personaStore.load();
   }
 
   onEdit(familia: any): void {

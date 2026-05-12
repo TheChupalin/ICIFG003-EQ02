@@ -27,9 +27,9 @@ public class FamiliaEntity {
 	@NonNull
 	private String nombref;
 	@NonNull
-	private String representante;
+	private int representante;
 	private String estadoCivilPadres;
 	private String situacionVivienda;
-	private int telefono_fijo;
-	private int contacto_emergencia;
+	private long telefono_fijo;
+	private long contacto_emergencia;
 }

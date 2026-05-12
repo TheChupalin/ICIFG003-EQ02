@@ -38,7 +38,7 @@ public class PersonaEntity {
 	private int madre;
 	private String direccionPrincipal;
 	private String comunaRegion;
-	private String telefonoMovil;
+	private long telefonoMovil;
 	private int familia;
 	@NonNull
 	private Date fechaRegistro;

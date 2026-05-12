@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { effect } from '@angular/core';
 import { FamiliaStore } from '../../store/familia.store';
+import { PersonaStore } from '../../../personas/services/persona.store';
 
 @Component({
   selector: 'app-familia-form',
@@ -25,24 +26,29 @@ import { FamiliaStore } from '../../store/familia.store';
 
           <div class="form-group mb-3">
             <label for="representante" class="form-label">Representante</label>
-            <input type="text" class="form-control" id="representante" formControlName="representante" required>
+            <select class="form-control" id="representante" formControlName="representante">
+              <option [ngValue]="null">-- Seleccione representante --</option>
+              <option *ngFor="let adulto of adultos" [ngValue]="adulto.id">
+                {{ adulto.nombres }} {{ adulto.apellidopa }} {{ adulto.apellidoma }}
+              </option>
+            </select>
             <small class="text-danger" *ngIf="form.get('representante')?.invalid && form.get('representante')?.touched">
               Campo requerido
             </small>
           </div>
 
           <div class="form-group mb-3">
-            <label for="estadocivilpadres" class="form-label">Estado Civil Padres</label>
-            <input type="text" class="form-control" id="estadocivilpadres" formControlName="estadocivilpadres" required>
-            <small class="text-danger" *ngIf="form.get('estadocivilpadres')?.invalid && form.get('estadocivilpadres')?.touched">
+            <label for="estadoCivilPadres" class="form-label">Estado Civil Padres</label>
+            <input type="text" class="form-control" id="estadoCivilPadres" formControlName="estadoCivilPadres" required>
+            <small class="text-danger" *ngIf="form.get('estadoCivilPadres')?.invalid && form.get('estadoCivilPadres')?.touched">
               Campo requerido
             </small>
           </div>
 
           <div class="form-group mb-3">
-            <label for="situacionvivienda" class="form-label">Situación Vivienda</label>
-            <input type="text" class="form-control" id="situacionvivienda" formControlName="situacionvivienda" required>
-            <small class="text-danger" *ngIf="form.get('situacionvivienda')?.invalid && form.get('situacionvivienda')?.touched">
+            <label for="situacionVivienda" class="form-label">Situación Vivienda</label>
+            <input type="text" class="form-control" id="situacionVivienda" formControlName="situacionVivienda" required>
+            <small class="text-danger" *ngIf="form.get('situacionVivienda')?.invalid && form.get('situacionVivienda')?.touched">
               Campo requerido
             </small>
           </div>
@@ -78,16 +84,21 @@ import { FamiliaStore } from '../../store/familia.store';
 })
 export class FamiliaFormComponent implements OnInit {
   store = inject(FamiliaStore);
+  personaStore = inject(PersonaStore);
   private fb = inject(FormBuilder);
+
+  get adultos() {
+    return this.personaStore.personas().filter(p => p.tipo === 'Padre/Madre');
+  }
 
   form: FormGroup = this.fb.group({
     id: [0],
     nombref: ['', Validators.required],
-    representante: ['', Validators.required],
-    estadocivilpadres: ['', Validators.required],
-    situacionvivienda: ['', Validators.required],
-    telefono_fijo: [0, Validators.required],
-    contacto_emergencia: [0, Validators.required]
+    representante: [null, Validators.required],
+    estadoCivilPadres: ['', Validators.required],
+    situacionVivienda: ['', Validators.required],
+    telefono_fijo: [null, Validators.required],
+    contacto_emergencia: [null, Validators.required]
   });
 
   constructor() {
@@ -103,21 +114,37 @@ export class FamiliaFormComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.form.reset({ id: 0 });
+    this.store.load();
+    this.personaStore.load();
+    this.form.reset({ id: 0, representante: null, telefono_fijo: null, contacto_emergencia: null });
   }
 
   onSubmit(): void {
     if (this.form.invalid) return;
-    const familia = this.form.value;
-    if (familia.id === 0) {
-      this.store.add(familia);
+
+    const payload = {
+      nombref: this.form.value.nombref?.trim() ?? '',
+      representante: Number(this.form.value.representante),
+      estadoCivilPadres: this.form.value.estadoCivilPadres?.trim() ?? '',
+      situacionVivienda: this.form.value.situacionVivienda?.trim() ?? '',
+      telefono_fijo: Number(this.form.value.telefono_fijo),
+      contacto_emergencia: Number(this.form.value.contacto_emergencia)
+    };
+
+    if (this.form.value.id && this.form.value.id > 0) {
+      this.store.update({ ...payload, id: this.form.value.id } as any);
     } else {
-      this.store.update(familia);
+      this.store.add(payload as any);
     }
   }
 
   onClear(): void {
     this.store.clearSelected();
-    this.form.reset({ id: 0 });
+    this.form.reset({
+      id: 0,
+      representante: null,
+      telefono_fijo: null,
+      contacto_emergencia: null
+    });
   }
 }

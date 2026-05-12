@@ -14,6 +14,16 @@ export class PersonaListComponent {
   mostrarConfirm = false;
   idAEliminar: number | null = null;
 
+  get _store() {
+    return this.store;
+  }
+
+  obtenerNombrePersona(id: number | null | undefined) {
+    if (!id) return '-';
+    const persona = this._store.personas().find(p => p.id === id);
+    return persona ? `${persona.nombres} ${persona.apellidopa} ${persona.apellidoma}` : '-';
+  }
+  
   ngOnInit() {
     this.store.load();
   }

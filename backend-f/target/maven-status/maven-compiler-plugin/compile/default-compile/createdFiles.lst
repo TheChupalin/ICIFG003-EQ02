@@ -1,0 +1,13 @@
+com\example\demo\entity\FamiliaEntity$FamiliaEntityBuilder.class
+com\example\demo\interfaces\IFamiliaService.class
+com\example\demo\BackendFApplication.class
+com\example\demo\service\PersonaServiceImpl.class
+com\example\demo\service\FamiliaServiceImpl.class
+com\example\demo\repository\FamiliaRepository.class
+com\example\demo\entity\PersonaEntity.class
+com\example\demo\controller\PersonaController.class
+com\example\demo\entity\PersonaEntity$PersonaEntityBuilder.class
+com\example\demo\repository\PersonaRepository.class
+com\example\demo\controller\FamiliaController.class
+com\example\demo\entity\FamiliaEntity.class
+com\example\demo\interfaces\IPersonaService.class
