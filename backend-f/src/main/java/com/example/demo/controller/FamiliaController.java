@@ -17,7 +17,7 @@ import com.example.demo.interfaces.IFamiliaService;
 
 @RestController
 @RequestMapping("/api/v1/entities/familias")
-@CrossOrigin(origins = "http://localhost:9992")
+@CrossOrigin(origins = {"http://localhost:4200", "http://localhost:9992"})
 public class FamiliaController {
 
 	@Autowired

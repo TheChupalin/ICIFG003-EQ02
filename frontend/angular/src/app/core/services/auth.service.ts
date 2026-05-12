@@ -1,21 +1,54 @@
 import { Injectable } from '@angular/core';
 import { signal, computed } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { tap } from 'rxjs/operators';
+import { Observable } from 'rxjs';
+
+export interface AuthUser {
+  id: number;
+  email: string;
+  role: string;
+}
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  private isAuthenticatedSignal = signal(false);
-  isAuthenticated$ = computed(() => this.isAuthenticatedSignal());
+  private apiUrl = 'http://localhost:8882/api/v1/auth';
+  private authUserSignal = signal<AuthUser | null>(this.loadUser());
+  isAuthenticated$ = computed(() => !!this.authUserSignal());
 
-  login(email: string, password: string): void {
-    // Mock login - en producción aquí iría validación real
-    if (email && password) {
-      this.isAuthenticatedSignal.set(true);
-    }
+  constructor(private http: HttpClient) {}
+
+  login(email: string, password: string): Observable<AuthUser> {
+    return this.http.post<AuthUser>(`${this.apiUrl}/login`, { email, password }).pipe(
+      tap(user => this.setUser(user))
+    );
+  }
+
+  register(email: string, password: string): Observable<AuthUser> {
+    return this.http.post<AuthUser>(`${this.apiUrl}/register`, { email, password }).pipe(
+      tap(user => this.setUser(user))
+    );
   }
 
   logout(): void {
-    this.isAuthenticatedSignal.set(false);
+    this.authUserSignal.set(null);
+    localStorage.removeItem('auth_user');
+  }
+
+  private setUser(user: AuthUser) {
+    this.authUserSignal.set(user);
+    localStorage.setItem('auth_user', JSON.stringify(user));
+  }
+
+  private loadUser(): AuthUser | null {
+    const raw = localStorage.getItem('auth_user');
+    if (!raw) return null;
+    try {
+      return JSON.parse(raw) as AuthUser;
+    } catch {
+      return null;
+    }
   }
 }

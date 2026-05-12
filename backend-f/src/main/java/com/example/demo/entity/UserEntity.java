@@ -1,5 +1,8 @@
 package com.example.demo.entity;
 
+import java.util.Date;
+
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -10,25 +13,27 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.NonNull;
 
 @Entity
-@Table(name = "familias")
-
+@Table(name = "app_users")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class FamiliaEntity {
+public class UserEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
-	@NonNull
-	private String nombref;
-	private int representante;
-	private String estadoCivilPadres;
-	private String situacionVivienda;
-	private long telefono_fijo;
-	private long contacto_emergencia;
+
+	@Column(nullable = false, unique = true)
+	private String email;
+
+	@Column(nullable = false)
+	private String passwordHash;
+
+	@Column(nullable = false)
+	private String role;
+
+	@Column(nullable = false)
+	private Date createdAt;
 }

@@ -7,7 +7,7 @@
       </div>
     </div>
     <div class="col-lg-6 p-5 bg-white">
-      <h3 class="mb-4">Iniciar Sesión</h3>
+      <h3 class="mb-4">@if (isRegisterMode) { Crear Cuenta } @else { Iniciar Sesion }</h3>
       <form (ngSubmit)="onSubmit()" class="login-form">
         <div class="mb-3">
           <label for="email" class="form-label">Email</label>
@@ -17,9 +17,28 @@
           <label for="password" class="form-label">Contraseña</label>
           <input id="password" type="password" class="form-control" [(ngModel)]="password" name="password" required>
         </div>
-        <button type="submit" class="btn btn-primary w-100">Ingresar</button>
+        @if (isRegisterMode) {
+          <div class="mb-4">
+            <label for="confirmPassword" class="form-label">Confirmar contraseña</label>
+            <input id="confirmPassword" type="password" class="form-control" [(ngModel)]="confirmPassword" name="confirmPassword" required>
+          </div>
+        }
+        @if (errorMessage) {
+          <div class="alert alert-danger">{{ errorMessage }}</div>
+        }
+        <button type="submit" class="btn btn-primary w-100">
+          @if (isRegisterMode) { Crear cuenta } @else { Ingresar }
+        </button>
       </form>
-      <p class="text-center text-muted mt-4">¿No tienes cuenta? No es necesario para esta demo.</p>
+      <div class="text-center text-muted mt-4">
+        @if (isRegisterMode) {
+          ¿Ya tienes cuenta?
+          <button type="button" class="btn btn-link p-0" (click)="toggleMode()">Inicia sesion</button>
+        } @else {
+          ¿No tienes cuenta?
+          <button type="button" class="btn btn-link p-0" (click)="toggleMode()">Crea una aqui</button>
+        }
+      </div>
     </div>
   </div>
 </div>

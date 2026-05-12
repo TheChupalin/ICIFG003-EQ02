@@ -37,6 +37,19 @@
       </div>
 
       <div class="mb-3">
+        <label class="form-label">Familia</label>
+        <select class="form-control" formControlName="familia">
+          <option [ngValue]="0">-- Seleccione familia --</option>
+          <option *ngFor="let f of familias" [ngValue]="f.id">
+            {{ f.nombref }}
+          </option>
+        </select>
+        @if (form.get('familia')?.touched && form.get('familia')?.invalid) {
+          <div class="text-danger mt-1">La familia es obligatoria</div>
+        }
+      </div>
+
+      <div class="mb-3">
         <label class="form-label">Padre</label>
         <select class="form-control" formControlName="padre">
           <option [ngValue]="0">-- Seleccione padre --</option>

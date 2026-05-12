@@ -6,6 +6,7 @@ export interface Persona {
   tipo: string;
   padre: number;
   madre: number;
+  familia: number;
   direccionPrincipal: string;
   comunaRegion: string;
   telefonoMovil: string;

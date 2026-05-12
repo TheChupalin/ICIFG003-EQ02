@@ -2,6 +2,7 @@ import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { PersonaStore } from '../services/persona.store';
 import { ConfirmDialogComponent } from '../../../shared/components/confirm-dialog.component';
+import { FamiliaStore } from '../../familias/store/familia.store';
 
 @Component({
   selector: 'app-persona-list',
@@ -11,6 +12,7 @@ import { ConfirmDialogComponent } from '../../../shared/components/confirm-dialo
 })
 export class PersonaListComponent {
   store = inject(PersonaStore);
+  familiaStore = inject(FamiliaStore);
   mostrarConfirm = false;
   idAEliminar: number | null = null;
 
@@ -23,9 +25,16 @@ export class PersonaListComponent {
     const persona = this._store.personas().find(p => p.id === id);
     return persona ? `${persona.nombres} ${persona.apellidopa} ${persona.apellidoma}` : '-';
   }
+
+  obtenerNombreFamilia(id: number | null | undefined) {
+    if (!id) return '-';
+    const familia = this.familiaStore.familias$().find(f => f.id === id);
+    return familia ? familia.nombref : '-';
+  }
   
   ngOnInit() {
     this.store.load();
+    this.familiaStore.load();
   }
 
   editar(persona: any) {

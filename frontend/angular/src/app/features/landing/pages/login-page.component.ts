@@ -14,11 +14,42 @@ import { AuthService } from '../../../core/services/auth.service';
 export class LoginPageComponent {
   email = '';
   password = '';
+  confirmPassword = '';
+  isRegisterMode = false;
+  errorMessage = '';
   private router = inject(Router);
   private authService = inject(AuthService);
 
   onSubmit(): void {
-    this.authService.login(this.email, this.password);
-    this.router.navigate(['/personas']);
+    this.errorMessage = '';
+
+    if (this.isRegisterMode) {
+      if (this.password !== this.confirmPassword) {
+        this.errorMessage = 'Las contraseñas no coinciden.';
+        return;
+      }
+
+      this.authService.register(this.email, this.password).subscribe({
+        next: () => this.router.navigate(['/personas']),
+        error: (err) => {
+          this.errorMessage = err?.error || 'Error al registrar.';
+        }
+      });
+      return;
+    }
+
+    this.authService.login(this.email, this.password).subscribe({
+      next: () => this.router.navigate(['/personas']),
+      error: (err) => {
+        this.errorMessage = err?.error || 'Credenciales invalidas.';
+      }
+    });
+  }
+
+  toggleMode(): void {
+    this.isRegisterMode = !this.isRegisterMode;
+    this.errorMessage = '';
+    this.password = '';
+    this.confirmPassword = '';
   }
 }
